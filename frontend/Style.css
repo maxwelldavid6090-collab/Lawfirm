@@ -225,6 +225,11 @@ nav a:hover{
   box-shadow:0 20px 40px rgba(0,0,0,0.16);
 }
 
+.contact .gold-btn:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
 .outline-btn{
   border:2px solid rgba(255,255,255,0.88);
   color:#fff;
