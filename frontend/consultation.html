@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book a Consultation | Maxwell & Associates</title>
+  <link rel="stylesheet" href="Style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+</head>
+<body>
+  <header>
+    <div class="container nav-container">
+      <div class="logo">Maxwell <span>&</span> Associates</div>
+      <nav>\n        <a href="index.html">Home</a>\n        <a href="about.html">About</a>\n        <a href="practice.html">Practice Areas</a>\n        <a href="attorneys.html">Attorneys</a>\n        <a href="consultation.html">Consultation</a>\n        <a href="contact.html">Contact</a>\n      </nav>
+    </div>
+  </header>
+
+  <section class="contact" id="consultation">
+    <div class="container">
+      <div class="section-title">
+        <h2>Book a Consultation</h2>
+        <p>Request a confidential consultation and speak directly with one of our legal specialists.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Consultation Details</h3>
+          <p>We are ready to help with corporate, contract, immigration, litigation, property, and international advisory matters.</p>
+          <p><i class="fa-solid fa-location-dot"></i> London, United Kingdom</p>
+          <p><i class="fa-solid fa-phone"></i> +44 20 1234 5678</p>
+          <p><i class="fa-solid fa-envelope"></i> maxwellandassociates50@gmail.com</p>
+        </div>
+
+        <form id="bookingForm" class="contact-card">
+          <h3>Consultation Request</h3>
+          <p>Please provide the information below and we will contact you to confirm your appointment.</p>
+          <input type="text" id="bookingName" placeholder="Full Name" required>
+          <input type="email" id="bookingEmail" placeholder="Email Address" required>
+          <input type="tel" id="bookingPhone" placeholder="Phone Number" required>
+          <input type="text" id="bookingPreferred" placeholder="Preferred Date / Time" required>
+          <select id="bookingTopic" required>
+            <option value="" disabled selected>Practice Area</option>
+            <option value="Corporate Law">Corporate Law</option>
+            <option value="Contract Law">Contract Law</option>
+            <option value="Immigration Services">Immigration Services</option>
+            <option value="Litigation">Litigation</option>
+            <option value="Property Law">Property Law</option>
+            <option value="International Advisory">International Advisory</option>
+          </select>
+          <textarea id="bookingMessage" placeholder="Briefly describe your legal matter" required></textarea>
+          <button type="submit" class="btn gold-btn">Book Consultation</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Â© 2026 Maxwell & Associates. All Rights Reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

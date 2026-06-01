@@ -27,55 +27,113 @@ function addContactAsync(contact) {
   });
 }
 
-async function sendContactEmail(contact) {
+async function sendEmail(submission, type) {
   if (!smtpUser || !smtpPass) {
     throw new Error("SMTP_USER and SMTP_PASS must be set to send email notifications.");
   }
 
+  const subject = type === "booking"
+    ? `New Consultation Booking Request from ${submission.name}`
+    : `New Contact Message from ${submission.name}`;
+
+  const bodyLines = [
+    `<h2>${type === "booking" ? "Consultation Booking Request" : "Contact Message"}</h2>`,
+    `<p><strong>Name:</strong> ${submission.name}</p>`,
+    `<p><strong>Email:</strong> ${submission.email}</p>`,
+  ];
+
+  if (submission.subject) {
+    bodyLines.push(`<p><strong>Subject:</strong> ${submission.subject}</p>`);
+  }
+
+  if (submission.phone) {
+    bodyLines.push(`<p><strong>Phone:</strong> ${submission.phone}</p>`);
+  }
+
+  if (submission.preferred_date) {
+    bodyLines.push(`<p><strong>Preferred Date / Time:</strong> ${submission.preferred_date}</p>`);
+  }
+
+  if (submission.topic) {
+    bodyLines.push(`<p><strong>Practice Area:</strong> ${submission.topic}</p>`);
+  }
+
+  bodyLines.push(`<p><strong>Message:</strong><br/>${submission.message.replace(/\n/g, "<br/>")}</p>`);
+  bodyLines.push(`<p><strong>Submitted:</strong> ${submission.created_at}</p>`);
+
   const mailOptions = {
     from: `"Maxwell & Associates Website" <${smtpUser}>`,
     to: recipientEmail,
-    subject: `New Consultation Booking from ${contact.name}`,
-    text: `New consultation booking request:\n\nName: ${contact.name}\nEmail: ${contact.email}\nMessage:\n${contact.message}\n\nSubmitted: ${contact.created_at}`,
-    html: `
-      <h2>New Consultation Booking Request</h2>
-      <p><strong>Name:</strong> ${contact.name}</p>
-      <p><strong>Email:</strong> ${contact.email}</p>
-      <p><strong>Message:</strong><br/>${contact.message.replace(/\n/g, "<br/>")}</p>
-      <p><strong>Submitted:</strong> ${contact.created_at}</p>
-    `,
+    subject,
+    html: bodyLines.join(""),
   };
 
   await transporter.sendMail(mailOptions);
 }
 
 router.post("/contact", async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, subject, message } = req.body;
 
-  if (!name || !email || !message) {
+  if (!name || !email || !subject || !message) {
     return res.status(400).json({ message: "Please fill in all fields." });
   }
 
-  const contact = {
+  const submission = {
     name,
     email,
+    subject,
     message,
+    type: "contact",
     created_at: new Date().toISOString(),
   };
 
   try {
-    await addContactAsync(contact);
+    await addContactAsync(submission);
   } catch (err) {
     console.error("Database error writing contact message:", err);
     return res.status(500).json({ message: "Unable to save your message." });
   }
 
   try {
-    await sendContactEmail(contact);
+    await sendEmail(submission, "contact");
     res.json({ message: "Thank you! Your message has been sent." });
   } catch (err) {
     console.error("Email notification error:", err);
     res.status(500).json({ message: "Your message was saved, but the email notification failed." });
+  }
+});
+
+router.post("/booking", async (req, res) => {
+  const { name, email, phone, preferred_date, topic, message } = req.body;
+
+  if (!name || !email || !phone || !preferred_date || !topic || !message) {
+    return res.status(400).json({ message: "Please fill in all booking fields." });
+  }
+
+  const submission = {
+    name,
+    email,
+    phone,
+    preferred_date,
+    topic,
+    message,
+    type: "booking",
+    created_at: new Date().toISOString(),
+  };
+
+  try {
+    await addContactAsync(submission);
+  } catch (err) {
+    console.error("Database error writing booking request:", err);
+    return res.status(500).json({ message: "Unable to save your booking request." });
+  }
+
+  try {
+    await sendEmail(submission, "booking");
+    res.json({ message: "Thank you! Your consultation request has been sent." });
+  } catch (err) {
+    console.error("Email notification error:", err);
+    res.status(500).json({ message: "Your booking request was saved, but the email notification failed." });
   }
 });
 

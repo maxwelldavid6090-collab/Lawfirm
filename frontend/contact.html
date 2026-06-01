@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -14,13 +14,7 @@
   <header>
     <div class="container nav-container">
       <div class="logo">Maxwell <span>&</span> Associates</div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="practice.html">Practice Areas</a>
-        <a href="attorneys.html">Attorneys</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+      <nav>\n        <a href="index.html">Home</a>\n        <a href="about.html">About</a>\n        <a href="practice.html">Practice Areas</a>\n        <a href="attorneys.html">Attorneys</a>\n        <a href="consultation.html">Consultation</a>\n        <a href="contact.html">Contact</a>\n      </nav>
     </div>
   </header>
 
@@ -37,11 +31,16 @@
           <p><i class="fa-solid fa-phone"></i> +44 20 1234 5678</p>
           <p><i class="fa-brands fa-whatsapp"></i> +44 7700 900000</p>
           <p><i class="fa-solid fa-envelope"></i> maxwellandassociates50@gmail.com</p>
+          <p style="margin-top:24px;"><a href="consultation.html" class="btn gold-btn">Book a Consultation</a></p>
         </div>
-        <form id="contactForm">
-          <input type="text" id="name" placeholder="Full Name" required>
-          <input type="email" id="email" placeholder="Email Address" required>
-          <textarea id="message" placeholder="Your Message"></textarea>
+
+        <form id="contactForm" class="contact-card">
+          <h3>Send a Message</h3>
+          <p>Have a general question? We will get back to you shortly.</p>
+          <input type="text" id="contactName" placeholder="Full Name" required>
+          <input type="email" id="contactEmail" placeholder="Email Address" required>
+          <input type="text" id="contactSubject" placeholder="Subject" required>
+          <textarea id="contactMessage" placeholder="Your Message" required></textarea>
           <button type="submit" class="btn gold-btn">Send Message</button>
         </form>
       </div>
@@ -49,9 +48,10 @@
   </section>
 
   <footer>
-    <p>© 2026 Maxwell & Associates. All Rights Reserved.</p>
+    <p>Â© 2026 Maxwell & Associates. All Rights Reserved.</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
+
